@@ -1,3 +1,3 @@
 # Arduino
 
-Just a staging area for small programs and other random Arduino work.
+Just an area to stash small programs and other random Arduino work.
