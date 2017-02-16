@@ -1,3 +1,10 @@
+#include <WebSocketServer.h>
+#include <MD5.h>
+#include <Base64.h>
+#include <WebSocketClient.h>
+#include <global.h>
+#include <sha1.h>
+
 
 
 #include <ESP8266WiFi.h>
