@@ -3,8 +3,7 @@
 #include <DHT.h>
 #include <RestClient.h>
 
-
-/* Private header file that holds my wifi ssid and password. 
+/* Private header file that holds your wifi ssid and password. 
  * Create this file in your libraries directory like so: 
  *  Arduion/librarires/private/private.h:
  *    #define WIFISSID "<your wifi ssid>"
@@ -25,13 +24,11 @@ const char* SERVER_IP = "192.168.1.98";
 ESP8266WebServer server;
 
 void setup() {
-
   Serial.begin(115200);
   dht.begin();
 
   delay(10);
 
- 
   // Connect to WiFi network
   Serial.println();
   Serial.println();
@@ -50,7 +47,7 @@ void setup() {
   Serial.println("local IP: ");
   Serial.print(myip);
 
-
+  Serial.println("");
   Serial.println("registering with server at: ");
   Serial.println(SERVER_IP);
 
@@ -64,37 +61,30 @@ void setup() {
   Serial.println(statusCode);
   Serial.println(response);
 
-
   server.on("/read", readSensor);
   server.begin();
-  
 }
 
 void readSensor() {
-  // Read from the DHT22
-
   Serial.println("reading data....");
   hum = dht.readHumidity();
   temp= dht.readTemperature(1);
-  /*
-  hum = 22.2;
-  temp = 33.3;
-  */
   
   Serial.print("Humidity: ");
   Serial.print(hum);
   Serial.print(" %, Temp: ");
   Serial.print(temp);
-  Serial.println(" F");
+  Serial.println("°F");
 
-  //Enclose property names in double quotes
+  /*
+   * Enclose property names in double quotes, because JSON.
+   */
   String humidity = "\"humidity\": ";
   humidity = humidity + hum;
   String temperature = "\"temperature\": ";
   temperature = temperature + temp;
   
   String resp = "{" + temperature + ", " + humidity + "}";
-  //const char *response = resp.c_str();
 
   Serial.println(resp);
   Serial.println("Sending data");
@@ -102,8 +92,6 @@ void readSensor() {
 }
 
 void loop() {
-  
   server.handleClient();
-  
 }
  
